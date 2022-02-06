@@ -7,8 +7,44 @@
     <title>Odin Calculator</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <div class="flex" id="main">
+        <div class="flex" id="display">
+            <div class="flex" id="display-num">
+                12345
+            </div>
+            <div class="flex" id="display-logo">
+                Odin Calc
+            </div>
+        </div>
+        <div class="flex" id="interface">
+            <div class="flex" id="numpad">
+                <button id="7"class="numpad-button">7</button>
+                <button id="8"class="numpad-button">8</button>
+                <button id="9"class="numpad-button">9</button>
+                <button id="4"class="numpad-button">4</button>
+                <button id="5"class="numpad-button">5</button>
+                <button id="6"class="numpad-button">6</button>
+                <button id="1"class="numpad-button">1</button>
+                <button id="2"class="numpad-button">2</button>
+                <button id="3"class="numpad-button">3</button>
+                <button id="0"class="numpad-button">0</button>
+                <button id="00"class="numpad-button">00</button>
+                <button id="dot"class="numpad-button">.</button>
+            </div>
+            <div class="flex" id="functions">
+                <button id="subtract"class="interface-function">-</button>
+                <button id="clear"class="interface-function">C</button>
+                <button id="add"class="interface-function">+</button>
+                <button id="divide"class="interface-function">%</button>
+                <button id="equals"class="interface-function">=</button>
+                <button id="multiplay"class="interface-function">x</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
