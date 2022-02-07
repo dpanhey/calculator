@@ -15,6 +15,8 @@ numpadButtons.forEach((button) => {
     });
 });
 
+// ADD OPERATOR FUNCTION TO functionButtons!!!!!!!
+
 functionButtons.forEach((button) => {
     button.addEventListener("click", () => {
         switch(button.id) {
