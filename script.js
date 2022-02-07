@@ -1,28 +1,71 @@
 "use strict";
 
+const displayInputNum = document.querySelector("#display-num div:last-child");
+let inputNumber = "";
+
+const displayStoredNum = document.querySelector("#display-num div:first-child");
+let storedNumber;
+
+const numpadButtons = document.querySelectorAll("#numpad button");
+const functionButtons = document.querySelectorAll("#functions button")
+
+numpadButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        populateInputNumber(button.id);
+    });
+});
+
+functionButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        switch(button.id) {
+            case "subtract":
+            case "add":
+            case "divide":
+            case "multiply":
+                storedNumber = inputNumber;
+                inputNumber = "";
+                displayStoredNum.textContent = storedNumber;
+                displayInputNum.textContent = inputNumber;
+                break;;
+            case ("equals" && storedNumber === ""):
+                break;
+            case "equals":
+                storedNumber = parseInt(storedNumber);
+                inputNumber = parseInt(inputNumber);
+                storedNumber += inputNumber;
+                inputNumber = "";
+                displayStoredNum.textContent = storedNumber;
+                displayInputNum.textContent = inputNumber;
+                break;
+            case "clear":
+                storedNumber = "";
+                inputNumber = "";
+                displayStoredNum.textContent = storedNumber;
+                displayInputNum.textContent = inputNumber;
+        }
+    });
+});
+
+const populateInputNumber = function(buttonId) {
+    inputNumber = `${inputNumber}${buttonId}`;
+    displayInputNum.textContent = inputNumber;
+}
+
 const calcAdd = function(num1, num2) {
     return num1 + num2;
 };
-
-console.log(calcAdd(2, 3))
 
 const calcSubtract = function(num1, num2) {
     return num1 - num2;
 };
 
-console.log(calcSubtract(5, 2))
-
 const calcMultiply = function(num1, num2) {
     return num1 * num2;
 };
 
-console.log(calcMultiply(2, 5))
-
 const calcDivide = function(num1, num2) {
     return num1 / num2;
 };
-
-console.log(calcDivide(7, 3))
 
 const operate = function(operator, num1, num2) {
     switch (operator) {
@@ -43,8 +86,3 @@ const operate = function(operator, num1, num2) {
     }
 };
 
-console.log(operate("add", 2, 5));
-console.log(operate("subtract", 2, 5));
-console.log(operate("multiplay", 2, 5));
-console.log(operate("divide", 2, 5));
-console.log(operate("test", 2, 5));
