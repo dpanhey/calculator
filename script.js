@@ -1,57 +1,53 @@
 "use strict";
 
+
 const displayInputNum = document.querySelector("#display-num div:last-child");
 let inputNumber = "";
 
 const displayStoredNum = document.querySelector("#display-num div:first-child");
-let storedNumber;
+let storedNumber = "";
+console.log(storedNumber);
 
 const numpadButtons = document.querySelectorAll("#numpad button");
 const functionButtons = document.querySelectorAll("#functions button")
 
 numpadButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        populateInputNumber(button.id);
+        showPressedNumber(button.id);
     });
 });
 
-// ADD OPERATOR FUNCTION TO functionButtons!!!!!!!
+const showPressedNumber = function(buttonId) {
+    inputNumber = parseInt(`${inputNumber}${buttonId}`);
+    displayInputNum.textContent = inputNumber;
+};
+
+const populateStoredNumber = function(num) {
+        storedNumber = parseInt(num);
+        displayStoredNum.textContent = storedNumber;
+};
+
+const clearInputNumber = function() {
+    inputNumber = "";
+    displayInputNum.textContent = inputNumber;
+};
+
+const clearStoredNumber = function() {
+    storedNumber = "";
+    displayInputNum.textContent = storedNumber;
+};
 
 functionButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        switch(button.id) {
-            case "subtract":
-            case "add":
-            case "divide":
-            case "multiply":
-                storedNumber = inputNumber;
-                inputNumber = "";
-                displayStoredNum.textContent = storedNumber;
-                displayInputNum.textContent = inputNumber;
-                break;;
-            case ("equals" && storedNumber === ""):
-                break;
-            case "equals":
-                storedNumber = parseInt(storedNumber);
-                inputNumber = parseInt(inputNumber);
-                storedNumber += inputNumber;
-                inputNumber = "";
-                displayStoredNum.textContent = storedNumber;
-                displayInputNum.textContent = inputNumber;
-                break;
-            case "clear":
-                storedNumber = "";
-                inputNumber = "";
-                displayStoredNum.textContent = storedNumber;
-                displayInputNum.textContent = inputNumber;
+        if(typeof storedNumber !== undefined) {
+            populateStoredNumber(operate(button.id, storedNumber, inputNumber))
+            clearInputNumber();
+        } else {
+            populateStoredNumber(inputNumber);
         }
+        
     });
 });
-
-const populateInputNumber = function(buttonId) {
-    inputNumber = `${inputNumber}${buttonId}`;
-    displayInputNum.textContent = inputNumber;
-}
 
 const calcAdd = function(num1, num2) {
     return num1 + num2;
@@ -69,6 +65,15 @@ const calcDivide = function(num1, num2) {
     return num1 / num2;
 };
 
+const calcEquals = function() {
+
+};
+
+const calcClear = function() {
+    populateStoredNumber("1");
+    clearInputNumber();
+};
+
 const operate = function(operator, num1, num2) {
     switch (operator) {
         case "add":
@@ -82,6 +87,12 @@ const operate = function(operator, num1, num2) {
             break;
         case "divide":
             return calcDivide(num1, num2);
+            break;
+        case "equals":
+            calcEquals();
+            break;
+        case "clear":
+            calcClear();
             break;
         default:
             throw("Sorry, that didnt work!");
