@@ -37,6 +37,12 @@ const clearStoredNumber = function() {
     displayInputNum.textContent = storedNumber;
 };
 
+// Need to add additional Display to show the operator for the next operation
+// New order of executed functions --> store number and operator --> 
+// after next input and click on operator --> execute the first choosen operation --> 
+// store as storedNumber -->
+// store the actual pressed operation --> repeat
+
 functionButtons.forEach((button) => {
     button.addEventListener("click", () => {
         if(typeof storedNumber !== undefined) {
