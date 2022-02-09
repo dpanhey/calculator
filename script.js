@@ -61,11 +61,16 @@ const clearStoredNumber = function() {
     displayInputNum.textContent = storedNumber;
 };
 
-// Need to add additional Display to show the operator for the next operation
-// New order of executed functions --> store number and operator --> 
-// after next input and click on operator --> execute the first choosen operation --> 
-// store as storedNumber -->
-// store the actual pressed operation --> repeat
+// EXTRA CREDIT: Users can get floating point numbers if they do the math 
+// required to get one, but they can’t type them in yet. Add a . button and let 
+// users input decimals! Make sure you don’t let them type more than one though: 
+// 12.3.56.5. It is hard to do math on these numbers. (disable the 
+// decimal button if there’s already one in the display)
+
+// EXTRA CREDIT: Add a “backspace” button, so the user can undo 
+// if they click the wrong number.
+
+// EXTRA CREDIT: Add keyboard support!
 
 clearButton.addEventListener("click", () => {
     calcClear();
