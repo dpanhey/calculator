@@ -1,39 +1,63 @@
 "use strict";
 
+let inputNumber;
+let storedNumber;
+let storedOperator = "none";
+console.log(inputNumber);
+console.log(typeof storedNumber);
 
-const displayInputNum = document.querySelector("#display-num div:last-child");
-let inputNumber = "";
-
-const displayStoredNum = document.querySelector("#display-num div:first-child");
-let storedNumber = "";
-console.log(storedNumber);
-
+const displayInputNum = document.querySelector("#display-input");
+const displayStoredNum = document.querySelector("#display-stored div:first-child");
+const displayStoredOperator = document.querySelector("#display-stored div:last-child")
 const numpadButtons = document.querySelectorAll("#numpad button");
 const functionButtons = document.querySelectorAll("#functions button")
+const clearButton = document.querySelector("#clear");
 
-numpadButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        showPressedNumber(button.id);
-    });
-});
-
-const showPressedNumber = function(buttonId) {
-    inputNumber = parseInt(`${inputNumber}${buttonId}`);
+const populateInputNumber = function(buttonId) {
+    if(inputNumber === undefined) {
+        inputNumber = parseInt(buttonId);
+    } else {
+        inputNumber = parseInt(`${inputNumber}${buttonId}`);
+    };
     displayInputNum.textContent = inputNumber;
 };
 
 const populateStoredNumber = function(num) {
-        storedNumber = parseInt(num);
-        displayStoredNum.textContent = storedNumber;
+    storedNumber = num;
+    displayStoredNum.textContent = storedNumber;
+};
+
+const populateStoredOperator = function(operator) {
+    storedOperator = operator;
+    switch (operator) {
+        case "add":
+            displayStoredOperator.textContent = "+";
+            break;
+        case "subtract":
+            displayStoredOperator.textContent = "-";
+            break;
+        case "multiply":
+            displayStoredOperator.textContent = "x";
+            break;
+        case "divide":
+            displayStoredOperator.textContent = "%";
+            break;
+        case "equals":
+            displayStoredOperator.textContent = "=";
+            break;
+        default:
+            displayStoredOperator.textContent = undefined;
+            break;
+    }
 };
 
 const clearInputNumber = function() {
-    inputNumber = "";
+    inputNumber = undefined;
     displayInputNum.textContent = inputNumber;
 };
 
 const clearStoredNumber = function() {
-    storedNumber = "";
+    storedNumber = undefined;
     displayInputNum.textContent = storedNumber;
 };
 
@@ -43,15 +67,30 @@ const clearStoredNumber = function() {
 // store as storedNumber -->
 // store the actual pressed operation --> repeat
 
+clearButton.addEventListener("click", () => {
+    calcClear();
+})
+
 functionButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        if(typeof storedNumber !== undefined) {
-            populateStoredNumber(operate(button.id, storedNumber, inputNumber))
+        if(storedNumber === undefined) {
+            populateStoredNumber(inputNumber);
+            populateStoredOperator(button.id);
             clearInputNumber();
         } else {
-            populateStoredNumber(inputNumber);
+            populateStoredNumber(operate(storedOperator, storedNumber, inputNumber));
+            populateStoredOperator(button.id);
+            clearInputNumber();
         }
-        
+        console.log(storedOperator);
+        console.log(storedNumber);
+        console.log(inputNumber);
+    });
+});
+
+numpadButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        populateInputNumber(button.id);
     });
 });
 
@@ -71,12 +110,12 @@ const calcDivide = function(num1, num2) {
     return num1 / num2;
 };
 
-const calcEquals = function() {
-
+const calcEquals = function(num) {
+    return num;
 };
 
 const calcClear = function() {
-    populateStoredNumber("1");
+    clearStoredNumber();
     clearInputNumber();
 };
 
@@ -88,17 +127,14 @@ const operate = function(operator, num1, num2) {
         case "subtract":
             return calcSubtract(num1, num2);
             break;
-        case "multiplay":
+        case "multiply":
             return calcMultiply(num1, num2);
             break;
         case "divide":
             return calcDivide(num1, num2);
             break;
         case "equals":
-            calcEquals();
-            break;
-        case "clear":
-            calcClear();
+            return calcEquals(num2);
             break;
         default:
             throw("Sorry, that didnt work!");
