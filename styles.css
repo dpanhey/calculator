@@ -56,15 +56,16 @@ button {
 #display-num {
     flex-direction: column;
     width: 400px;
-    padding-left: 20px;
+    padding: 0 20px;
 }
 
-#display-num div:first-child {
+#display-stored {
     font-size: 20px;
     height: 40px;
+    justify-content: space-between;
 }
 
-#display-num div:last-child {
+#display-input {
     font-size: 40px;
     height: 40px;
 }
