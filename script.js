@@ -99,7 +99,12 @@ functionButtons.forEach((button) => {
 
 numpadButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        populateInputNumber(button.id);
+        if(inputNumber === undefined) {
+            populateInputNumber(button.id);
+        } else {
+            let decimalTest = (inputNumber.includes(".") && button.id == ".");
+            if(!decimalTest) {populateInputNumber(button.id)};
+        }
     });
 });
 
