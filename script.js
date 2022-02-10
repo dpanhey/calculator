@@ -23,7 +23,11 @@ const populateInputNumber = function(buttonId) {
 };
 
 const populateStoredNumber = function(num) {
-    storedNumber = parseFloat(num);
+    if(num === undefined) {
+        storedNumber = undefined;
+    } else {
+        storedNumber = parseFloat(num);
+    };
     displayStoredNum.textContent = storedNumber;
 };
 
