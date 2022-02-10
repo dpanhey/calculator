@@ -15,15 +15,15 @@ const clearButton = document.querySelector("#clear");
 
 const populateInputNumber = function(buttonId) {
     if(inputNumber === undefined) {
-        inputNumber = parseInt(buttonId);
+        inputNumber = buttonId;
     } else {
-        inputNumber = parseInt(`${inputNumber}${buttonId}`);
+        inputNumber = `${inputNumber}${buttonId}`;
     };
     displayInputNum.textContent = inputNumber;
 };
 
 const populateStoredNumber = function(num) {
-    storedNumber = num;
+    storedNumber = parseFloat(num);
     displayStoredNum.textContent = storedNumber;
 };
 
@@ -83,7 +83,7 @@ functionButtons.forEach((button) => {
             populateStoredOperator(button.id);
             clearInputNumber();
         } else {
-            populateStoredNumber(operate(storedOperator, storedNumber, inputNumber));
+            populateStoredNumber(operate(storedOperator, storedNumber, parseFloat(inputNumber)));
             populateStoredOperator(button.id);
             clearInputNumber();
         }
