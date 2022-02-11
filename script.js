@@ -65,48 +65,89 @@ const clearStoredNumber = function() {
     displayInputNum.textContent = storedNumber;
 };
 
-// EXTRA CREDIT: Users can get floating point numbers if they do the math 
-// required to get one, but they can’t type them in yet. Add a . button and let 
-// users input decimals! Make sure you don’t let them type more than one though: 
-// 12.3.56.5. It is hard to do math on these numbers. (disable the 
-// decimal button if there’s already one in the display)
-
-// EXTRA CREDIT: Add a “backspace” button, so the user can undo 
-// if they click the wrong number.
-
 // EXTRA CREDIT: Add keyboard support!
 
 clearButton.addEventListener("click", () => {
     calcClear();
 })
 
-functionButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        if(storedNumber === undefined) {
-            populateStoredNumber(inputNumber);
-            populateStoredOperator(button.id);
-            clearInputNumber();
-        } else {
-            populateStoredNumber(operate(storedOperator, storedNumber, parseFloat(inputNumber)));
-            populateStoredOperator(button.id);
-            clearInputNumber();
-        }
-        console.log(storedOperator);
-        console.log(storedNumber);
-        console.log(inputNumber);
-    });
-});
+const functionButtonClick = function(button) {
+    if(storedNumber === undefined) {
+        populateStoredNumber(inputNumber);
+        populateStoredOperator(button.target.id);
+        clearInputNumber();
+    } else {
+        populateStoredNumber(operate(storedOperator, storedNumber, parseFloat(inputNumber)));
+        populateStoredOperator(button.target.id);
+        clearInputNumber();
+    }
+    console.log(button.target.id);
+    console.log(storedOperator);
+    console.log(storedNumber);
+    console.log(inputNumber);
+};
+
+const numpadButtonClick = function(button) {
+    if(inputNumber === undefined) {
+        populateInputNumber(button.target.id);
+    } else {
+        let decimalTest = (inputNumber.includes(".") && button.target.id == ".");
+        if(!decimalTest) {populateInputNumber(button.target.id)};
+    }
+};
 
 numpadButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        if(inputNumber === undefined) {
-            populateInputNumber(button.id);
-        } else {
-            let decimalTest = (inputNumber.includes(".") && button.id == ".");
-            if(!decimalTest) {populateInputNumber(button.id)};
-        }
-    });
+    button.addEventListener("click", numpadButtonClick);
 });
+
+functionButtons.forEach((button) => {
+    button.addEventListener("click", functionButtonClick);
+});
+
+// const functionButtonKey = function(button) {
+//     if(storedNumber === undefined) {
+//         populateStoredNumber(inputNumber);
+//         populateStoredOperator(button.key);
+//         clearInputNumber();
+//     } else {
+//         populateStoredNumber(operate(storedOperator, storedNumber, parseFloat(inputNumber)));
+//         populateStoredOperator(button.key);
+//         clearInputNumber();
+//     }
+//     console.log(button.key);
+//     console.log(storedOperator);
+//     console.log(storedNumber);
+//     console.log(inputNumber);
+// };
+
+// const numpadButtonKey = function(button) {
+//     if(inputNumber === undefined) {
+//         populateInputNumber(button.key);
+//     } else {
+//         let decimalTest = (inputNumber.includes(".") && button.key == ".");
+//         if(!decimalTest) {populateInputNumber(button.key)};
+//     }
+// };
+
+// document.addEventListener("keydown", (button) => {
+//     const buttonSelector = document.querySelector("");
+//     console.log(buttonSelector);
+//     switch(button.key) {
+//         case "-":
+//         case "+":
+//         case "Enter":
+//         case "/":
+//         case "*":
+//             functionButtonKey(button.key);
+//             break;
+//         case "Delete":
+//             calcClear();
+//             break;
+//         default:
+//             numpadButtonKey(button.key);
+//             break;
+//     };
+// });
 
 const calcAdd = function(num1, num2) {
     return num1 + num2;
